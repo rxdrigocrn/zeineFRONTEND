@@ -34,7 +34,7 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
     };
 
     return (
-        <header className="flex items-center justify-between px-4 md:px-6 py-4 bg-gray-100 shadow relative">
+        <header className="flex items-center justify-between px-4 md:px-6 py-4 shadow relative">
             {/* LOGO e botão mobile */}
             <div className="flex items-center gap-4">
                 {isMobile && (
