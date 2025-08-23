@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" className={`${poppins.variable} ${dm_sans.variable}`}>
-      <body>
+      <body className="bg-shape-base">
         <AppInitializer />
         {children}
       </body>

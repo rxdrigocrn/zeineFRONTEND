@@ -1,26 +1,25 @@
-// Header.tsx
-'use client';
-import { PageType } from '@/app/(private)/home/page';
-import { Plus, User, Menu, X } from 'lucide-react';
-import Image from 'next/image';
-import { useState, useEffect } from 'react';
+"use client";
 
-interface HeaderProps {
-    activeTab: PageType;
-    setActiveTab: (tab: PageType) => void;
-}
+import { Plus, User, Menu, X, ChartColumnIncreasing, PackageIcon } from "lucide-react";
+import Image from "next/image";
+import { useState, useEffect } from "react";
+import { TabsButton } from "../ui/TabButton";
+import { useRouter, usePathname } from "next/navigation";
+import { SurpriseTooltip } from "../ui/SurpriseTooltip";
 
-export default function Header({ activeTab, setActiveTab }: HeaderProps) {
+export default function Header() {
     const [userImage, setUserImage] = useState<string | null>(null);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
 
-    // Detecta dispositivo móvel
+    const router = useRouter();
+    const pathname = usePathname(); // 🔥 rota atual
+
     useEffect(() => {
         const checkIsMobile = () => setIsMobile(window.innerWidth < 768);
         checkIsMobile();
-        window.addEventListener('resize', checkIsMobile);
-        return () => window.removeEventListener('resize', checkIsMobile);
+        window.addEventListener("resize", checkIsMobile);
+        return () => window.removeEventListener("resize", checkIsMobile);
     }, []);
 
     const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,15 +27,9 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
         if (file) setUserImage(URL.createObjectURL(file));
     };
 
-    const handleTabClick = (tab: PageType) => {
-        setActiveTab(tab);
-        setIsMobileMenuOpen(false);
-    };
-
     return (
-        <header className="flex items-center justify-between px-4 md:px-6 py-4 shadow relative">
-            {/* LOGO e botão mobile */}
-            <div className="flex items-center gap-4">
+        <header className="flex items-center justify-between px-2 md:px-4 py-4 shadow-xs relative">
+            <div className="flex items-center gap-4 w-1/3">
                 {isMobile && (
                     <button
                         className="p-2 rounded-md text-gray-700"
@@ -46,40 +39,50 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
                     </button>
                 )}
                 <div className="flex-shrink-0">
-                    <Image src="/logo.svg" alt="Logo" width={120} height={40} />
+                    <Image src="/LogoSemTexto.svg" alt="Logo" width={56} height={40} />
                 </div>
             </div>
 
-            {/* TABS desktop */}
+            {/* Coluna centro */}
             {!isMobile && (
-                <div className="flex gap-4">
-                    <button
-                        className={`px-4 py-2 rounded ${activeTab === 'dashboard' ? 'bg-green-500 text-white' : 'bg-gray-200'
-                            }`}
-                        onClick={() => setActiveTab('dashboard')}
-                    >
-                        Dashboard
-                    </button>
-                    <button
-                        className={`px-4 py-2 rounded ${activeTab === 'produto' ? 'bg-green-500 text-white' : 'bg-gray-200'
-                            }`}
-                        onClick={() => setActiveTab('produto')}
-                    >
-                        Produto
-                    </button>
+                <div className="flex justify-center w-1/3">
+                    <div className="flex gap-2">
+                        <TabsButton
+                            icon={<ChartColumnIncreasing />}
+                            label="Dashboard"
+                            isActive={pathname === "/dashboard"}
+                            onClick={() => router.push("/dashboard")}
+                        />
+                        <TabsButton
+                            icon={<PackageIcon />}
+                            label="Produto"
+                            isActive={pathname.startsWith("/produto")}
+                            onClick={() => router.push("/produto")}
+                        />
+                    </div>
                 </div>
             )}
 
-            {/* Botão + Avatar */}
-            <div className="flex items-center gap-4">
+            {/* Coluna direita */}
+            <div className="flex items-center justify-end gap-4 w-1/3">
                 {!isMobile && (
-                    <button className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-                        <Plus size={24} strokeWidth={1.5} /> Adicionar Produto
-                    </button>
+                    <SurpriseTooltip tooltipContent="Tá esperando o quê? Boraa moeer!! 🚀" >
+                        <button
+                            onClick={() => router.push("/produto/form")}
+                            className="flex items-center gap-2 bg-orange-base text-white px-4 py-2 rounded-xl cursor-pointer hover:bg-orange-700"
+                        >
+                            <Plus size={24} strokeWidth={1.5} /> Adicionar Produto
+                        </button>
+                    </SurpriseTooltip>
                 )}
-
                 {userImage ? (
-                    <Image src={userImage} alt="User avatar" width={40} height={40} className="rounded-full object-cover" />
+                    <Image
+                        src={userImage}
+                        alt="User avatar"
+                        width={40}
+                        height={40}
+                        className="rounded-full object-cover"
+                    />
                 ) : (
                     <label className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-400">
                         <User size={24} strokeWidth={1.5} />
@@ -88,25 +91,33 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
                 )}
             </div>
 
-            {/* Menu Mobile */}
             {isMobile && isMobileMenuOpen && (
-                <div className="absolute top-full left-0 right-0 bg-white shadow-lg z-10 p-4 md:hidden">
+                <div className="absolute top-full left-0 right-0 bg-shape-base shadow-lg z-10 p-4 md:hidden">
                     <div className="flex flex-col gap-2">
-                        <button
-                            className={`px-4 py-3 rounded text-left ${activeTab === 'dashboard' ? 'bg-green-500 text-white' : 'bg-gray-100'}`}
-                            onClick={() => handleTabClick('dashboard')}
-                        >
-                            Dashboard
-                        </button>
-                        <button
-                            className={`px-4 py-3 rounded text-left ${activeTab === 'produto' ? 'bg-green-500 text-white' : 'bg-gray-100'}`}
-                            onClick={() => handleTabClick('produto')}
-                        >
-                            Produto
-                        </button>
-                        <button className="flex items-center gap-2 bg-green-500 text-white px-4 py-3 rounded hover:bg-green-600 justify-center">
-                            <Plus size={20} strokeWidth={1.5} /> Adicionar Produto
-                        </button>
+                        <TabsButton
+                            icon={<ChartColumnIncreasing />}
+                            label="Dashboard"
+                            isActive={pathname === "/dashboard"}
+                            onClick={() => router.push("/dashboard")}
+                            className="w-full justify-start px-4 py-3"
+                        />
+                        <TabsButton
+                            icon={<PackageIcon />}
+                            label="Produto"
+                            isActive={pathname.startsWith("/produto")}
+                            onClick={() => router.push("/produto")}
+                            className="w-full justify-start px-4 py-3"
+                        />
+                        <SurpriseTooltip tooltipContent="Tá esperando o quê? Boraa moeer!! 🚀" >
+                            <button
+                                onClick={() => router.push("/produto/form")}
+                                className="flex items-center mx-auto gap-2 bg-orange-base text-white px-2 py-1 rounded-xl cursor-pointer hover:bg-orange-700"
+                            >
+                                <Plus size={24} strokeWidth={1.5} /> Adicionar Produto
+                            </button>
+                        </SurpriseTooltip>
+
+
                     </div>
                 </div>
             )}

@@ -1,6 +1,6 @@
 'use client';
-import ImageSection from "@/components/login/ImageSection";
-import LoginForm from "@/components/login/LoginForm";   
+import ImageSection from "@/components/auth/ImageSection";
+import LoginForm from "@/components/auth/LoginForm";   
 
 export default function LoginPage() {
     return (

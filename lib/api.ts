@@ -11,10 +11,13 @@ const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 export async function api(path: string, options?: RequestInit) {
     const url = `${baseUrl}${path}`;
 
+    // Se o body for FormData, não define Content-Type
+    const isFormData = options?.body instanceof FormData;
+
     const defaultOptions: RequestInit = {
         credentials: 'include',
         headers: {
-            'Content-Type': 'application/json',
+            ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
         },
     };
 
