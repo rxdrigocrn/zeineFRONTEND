@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { jwtVerify } from 'jose';
 
-const SECRET_KEY = "SEU_SEGREDO_SUPER_SECRETO";
+const SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 export async function middleware(request: NextRequest) {
     const token = request.cookies.get('access_token')?.value;
