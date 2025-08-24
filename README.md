@@ -22,10 +22,6 @@ Desafio Market Place Zeine.
 git clone https://github.com/_SEU_USUARIO_/_SEU_REPO_.git
 cd SEU_REPO
 npm install
-# ou
-yarn
-# ou
-pnpm install
 ```
 
 ### 2️⃣ Variáveis de ambiente
@@ -40,17 +36,12 @@ JWT_SECRET=SUA_CHAVE_SECRETA
 NEXT_PUBLIC_API_URL=http://localhost:5000
 ```
 
-> ⚠️ **Nunca faça commit do `.env.local` com secrets reais.**  
 > Use o `.env.example` como referência.
 
 ### 4️⃣ Rodando o servidor de desenvolvimento
 
 ```bash
 npm run dev
-# ou
-yarn dev
-# ou
-pnpm dev
 ```
 
 Abra [http://localhost:3000](http://localhost:3000) no navegador.  
