@@ -7,13 +7,11 @@ import { TabsButton } from "../ui/TabButton";
 import { useRouter, usePathname } from "next/navigation";
 import { SurpriseTooltip } from "../ui/SurpriseTooltip";
 import ProfileDropdown from "../ui/ProfileDropdown";
-import { useUserStore } from "@/store/userStore";
-import { useFetchUser } from "@/hooks/useFetchUsers";
+ import { useFetchUser } from "@/hooks/useFetchUsers";
 
 export default function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-    const { user } = useUserStore();
     useFetchUser();
 
     const router = useRouter();

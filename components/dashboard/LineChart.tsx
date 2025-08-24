@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/card';
 import {
     ChartContainer,
-    ChartTooltip,
     ChartTooltipContent,
 } from '@/components/ui/chart';
 import { Calendar, Users } from 'lucide-react';
@@ -88,7 +87,7 @@ const VisitorsLineChart = ({ data }: VisitorsLineChartProps) => {
                             content={
                                 <ChartTooltipContent
                                     indicator="dot"
-                                    formatter={(value, name, props) => (
+                                    formatter={(value) => (
                                         <div className="flex items-center gap-2">
                                             <Users className="h-4 w-4 text-gray-200" />
                                             <span className="font-semibold">{value}</span>

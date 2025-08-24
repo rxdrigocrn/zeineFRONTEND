@@ -8,7 +8,7 @@ import { TextInput } from '@/components/ui/FormInput';
 import { PriceInput } from '@/components/ui/PriceInput';
 import { TextAreaInput } from '@/components/ui/TextAreaInput';
 import { Button } from '@/components/ui/ButtonInput';
-import ProductFileInput from '../ui/ProductImage';
+import ProductFileInput from '@/components/ui/ProfileFileInput';
 import SelectInput from '../ui/SelectInput';
 import { Product } from '@/types';
 import { useRouter } from 'next/navigation';

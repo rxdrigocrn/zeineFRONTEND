@@ -5,14 +5,12 @@ import { Image as ImageIcon } from 'lucide-react';
 import clsx from 'clsx';
 
 interface ProductFileInputProps extends InputHTMLAttributes<HTMLInputElement> {
-    label?: string;
     error?: string;
     onFileSelect?: (file: File | null) => void;
-    previewUrl?: string; // opcional, para imagem existente
+    previewUrl?: string;
 }
 
 const ProductFileInput: React.FC<ProductFileInputProps> = ({
-    label,
     error,
     onFileSelect,
     previewUrl,

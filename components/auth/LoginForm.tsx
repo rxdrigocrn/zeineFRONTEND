@@ -34,15 +34,21 @@ const LoginForm = () => {
 
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
     try {
-      const response = await api('/auth/login', {
+      await api('/auth/login', {
         method: 'POST',
         body: JSON.stringify(data),
       });
 
       toast.success('Login realizado com sucesso!');
       router.push('/dashboard');
-    } catch (err: any) {
-      toast.error(err?.message || 'E-mail ou senha inválidos.');
+    } catch (err) {  
+      let errorMessage = 'E-mail ou senha inválidos.';
+
+       if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+
+      toast.error(errorMessage);
     }
   };
 

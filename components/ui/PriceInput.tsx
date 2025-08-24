@@ -2,8 +2,8 @@
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { TextInput, TextInputProps } from '@/components/ui/FormInput';
-import clsx from 'clsx';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface PriceInputProps extends Omit<TextInputProps<any>, 'icon'> {
     name: string;
     label: string;

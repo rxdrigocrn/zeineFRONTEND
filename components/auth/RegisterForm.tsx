@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Mail, Lock, User, Phone, Upload } from 'lucide-react';
+import { Mail, Lock, User, Phone } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 import { api } from '@/lib/api';
@@ -34,7 +34,6 @@ const RegisterForm = () => {
     const {
         register,
         handleSubmit,
-        setError,
         setValue,
         formState: { errors, isSubmitting },
         watch,
@@ -70,8 +69,12 @@ const RegisterForm = () => {
 
             toast.success('Cadastro realizado com sucesso! 🚀');
             router.push('/login');
-        } catch (err: any) {
-            toast.error(err?.message || 'Erro ao cadastrar usuário.');
+        } catch (err) {
+            let errorMessage = 'Erro ao cadastrar usuário.';
+            if (err instanceof Error) {
+                errorMessage = err.message;
+            }
+            toast.error(errorMessage);
         }
     };
 
@@ -112,11 +115,11 @@ const RegisterForm = () => {
                                         setValue("img_perfil", undefined, { shouldValidate: true, shouldDirty: true, shouldTouch: true });
                                     }
                                 }}
+                                previewUrl={filePreview} // CORREÇÃO 1 APLICADA
                                 sizeInput='w-24 h-24'
                                 iconSize={24}
                                 isRegister
                             />
-
 
 
                             <TextInput<RegisterFormInputs>

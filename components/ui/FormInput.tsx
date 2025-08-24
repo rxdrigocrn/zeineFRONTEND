@@ -5,7 +5,6 @@ import { UseFormRegister, FieldValues, Path } from 'react-hook-form';
 import { Eye, EyeOff, AlertCircle } from 'lucide-react';
 import clsx from 'clsx';
 
-// 1. Adicionar a nova prop 'isFilled' na interface
 export interface TextInputProps<T extends FieldValues> extends InputHTMLAttributes<HTMLInputElement> {
     label: string;
     name: Path<T>;

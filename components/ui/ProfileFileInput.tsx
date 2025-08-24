@@ -16,6 +16,7 @@ interface ProfileFileInputProps extends InputHTMLAttributes<HTMLInputElement> {
     onFileSelect?: (file: File | null) => void;
     sizeInput?: string;
     iconSize?: number;
+    previewUrl?: string;
 }
 
 const ProfileFileInput: React.FC<ProfileFileInputProps> = ({
@@ -26,6 +27,7 @@ const ProfileFileInput: React.FC<ProfileFileInputProps> = ({
     onFileSelect,
     sizeInput = 'w-12 h-12',
     iconSize = 16,
+    previewUrl,
     ...props
 }) => {
     const { setUser } = useUserStore();
@@ -72,8 +74,10 @@ const ProfileFileInput: React.FC<ProfileFileInputProps> = ({
                 : null;
             setPreview(profileUrl);
 
-        } catch (err: any) {
-            toast.error(err?.message || 'Erro ao atualizar imagem');
+        } catch (err) {
+            if (err instanceof Error) {
+                toast.error(err?.message || 'Erro ao atualizar imagem');
+            }
         } finally {
             setLoading(false);
         }

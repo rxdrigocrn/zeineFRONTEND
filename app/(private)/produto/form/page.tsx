@@ -1,12 +1,9 @@
 'use client';
 import Layout from '@/components/layout/LayoutBase';
 import ProductForm from '@/components/produtos/FormProduto';
-import { Button } from '@/components/ui/ButtonInput';
-import { Ban, Check, ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 const CriarForm = () => {
-    const router = useRouter();
 
     return (
         <Layout>
