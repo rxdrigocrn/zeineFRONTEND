@@ -1,6 +1,6 @@
 # 🚀 Zeine Front-End
 
-Projeto Next.js criado com **create-next-app** e aprimorado com **Tailwind CSS**, **TypeScript**, autenticação **JWT** e **Prisma**.
+Desafio Market Place Zeine.
 
 ---
 
