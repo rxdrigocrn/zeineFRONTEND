@@ -43,41 +43,6 @@ NEXT_PUBLIC_API_URL=http://localhost:5000
 > ⚠️ **Nunca faça commit do `.env.local` com secrets reais.**  
 > Use o `.env.example` como referência.
 
-### 3️⃣ Configuração do `next.config.js`
-
-Para permitir imagens locais e remotas, adicione/crie o arquivo `next.config.js`:
-
-```js
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-    reactStrictMode: true,
-    env: {
-        JWT_SECRET_KEY: process.env.JWT_SECRET,
-    },
-    images: {
-        remotePatterns: [
-            {
-                protocol: 'https',
-                hostname: 'HOST_PRODUCAO',
-                port: '',
-                pathname: '/uploads/',
-            },
-            {
-                protocol: 'http',
-                hostname: 'localhost',
-                port: '5000',
-                pathname: '/uploads/',
-            },
-        ],
-    },
-};
-
-export default nextConfig;
-```
-
-> ⚠️ Este arquivo não vem por padrão no Next.js. É necessário criá-lo manualmente.
-
 ### 4️⃣ Rodando o servidor de desenvolvimento
 
 ```bash
