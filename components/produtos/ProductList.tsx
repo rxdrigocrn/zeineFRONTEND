@@ -6,6 +6,7 @@ import { Product } from '@/types';
 import { api } from '@/lib/api';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { MessageCircleWarningIcon } from 'lucide-react';
+import Loader from '../ui/Loader';
 
 interface ProductsListProps {
     initialProducts: Product[];
@@ -48,16 +49,14 @@ const ProductsList: React.FC<ProductsListProps> = ({
         fetchProducts();
     }, [search, status, page, limit]);
 
-    if (loading) return <p className="text-center py-10">Carregando produtos...</p>;
+    if (loading) return <Loader />;
 
     return (
         <div className="flex flex-col lg:flex-row w-full gap-6">
-            {/* FilterBox: acima no mobile, esquerda no desktop */}
             <div className="w-full lg:w-1/3">
                 <FilterBox />
             </div>
 
-            {/* Lista de produtos */}
             <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-4 w-full">
                 {products.length > 0 ? (
                     products.map((product) => {

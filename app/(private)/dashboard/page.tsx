@@ -1,5 +1,6 @@
 'use client';
 import Dashboard from '@/components/layout/Dashboard';
+import Loader from '@/components/ui/Loader';
 import { api } from '@/lib/api';
 import { DashboardResponse } from '@/types';
 import { useEffect, useState } from 'react';
@@ -21,7 +22,8 @@ const DashboardPage = () => {
     fetchData();
   }, []);
 
-  if (!data) return <div>Loading...</div>;
+
+  if (!data) return <Loader />
 
   const productsSold = data?.productsSold ?? 0;
   const productsAnnounced = data?.productsAnnounced ?? 0;
