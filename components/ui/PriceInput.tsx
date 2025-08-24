@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { TextInput, TextInputProps } from '@/components/ui/FormInput';
 
@@ -11,6 +11,7 @@ interface PriceInputProps extends Omit<TextInputProps<any>, 'icon'> {
 
 export const PriceInput: React.FC<PriceInputProps> = ({ name, label, ...rest }) => {
     const { control } = useFormContext();
+    const [isFocused, setIsFocused] = useState(false);
 
     const formatPrice = (value: string) => {
         if (!value) return '';
@@ -28,8 +29,12 @@ export const PriceInput: React.FC<PriceInputProps> = ({ name, label, ...rest }) 
                     {...field}
                     {...rest}
                     label={label}
-                    leftIcon={<span className="text-orange-base">R$</span>}
+                    leftIcon={
+                        <span className={isFocused ? 'text-orange-100' : ''}>R$</span>
+                    }
                     onChange={(e) => field.onChange(formatPrice(e.target.value))}
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
                 />
             )}
         />

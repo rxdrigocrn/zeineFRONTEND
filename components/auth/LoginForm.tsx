@@ -60,7 +60,7 @@ const LoginForm = () => {
       >
         <div className='flex flex-col mb-8'>
           <div>
-            <h2 className="text-2xl font-bold mb-2 text-gray-500">Acesse sua conta</h2>
+            <h2 className="text-2xl font-md font-bold mb-2 text-gray-500">Acesse sua conta</h2>
             <p className="text-sm text-gray-300 mb-6">
               Informe seu e-mail e senha para entrar.
             </p>

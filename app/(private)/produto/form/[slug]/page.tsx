@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { Product } from '@/types';
 import { useProductStore } from '@/store/produtoStore';
 import { api } from '@/lib/api';
+import ActionLink from '@/components/ui/Link';
 
 const EditarForm = () => {
   const router = useRouter();
@@ -47,24 +48,20 @@ const EditarForm = () => {
 
           <div className="flex gap-8 mt-auto">
             {!product?.status?.includes('Vendido') && (
-              <button
-                type="button"
+              <ActionLink
+                label="Marcar como vendido"
+                icon={<Check size={18} />}
                 disabled={loading || !product?.id}
-                className="text-orange-base hover:underline cursor-pointer flex items-center gap-1"
                 onClick={() => sell(product.id, router)}
-              >
-                <Check size={18} /> Marcar como vendido
-              </button>
+              />
             )}
             {!product?.status?.includes('Cancelado') && (
-              <button
-                type="button"
+              <ActionLink
+                label="Desativar anúncio"
+                icon={<Ban size={18} />}
                 disabled={loading || !product?.id}
-                className="text-orange-base hover:underline cursor-pointer flex items-center gap-1"
                 onClick={() => cancel(product.id, router)}
-              >
-                <Ban size={18} /> Desativar anúncio
-              </button>
+              />
             )}
           </div>
         </div>

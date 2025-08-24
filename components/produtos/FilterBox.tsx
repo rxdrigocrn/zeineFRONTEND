@@ -59,7 +59,7 @@ const FilterBox = () => {
                 className='bg-white max-w-sm w-full p-4 rounded-3xl shadow-lg'
                 onSubmit={handleSubmit(onSubmit)}
             >
-                <p className='font-bold text-lg mb-6'>Filtrar</p>
+                <h3 className='font-bold text-gray-300 text-lg mb-6'>Filtrar</h3>
 
                 <div className='flex flex-col gap-5 mb-10'>
                     <TextInput

@@ -14,7 +14,7 @@ const Dashboard = ({ productsSold, productsAnnounced, visitorsData }: DashboardP
     <Layout>
       <div className="mb-8">
         <h1 className="text-2xl md:text-3xl font-bold">Últimos 30 dias</h1>
-        <p className="text-gray-500">Confira as estatísticas da sua loja no último mês</p>
+        <h2 className="text-gray-500">Confira as estatísticas da sua loja no último mês</h2>
       </div>
 
       <div className="flex flex-col justify-center items-center lg:flex-row w-full">

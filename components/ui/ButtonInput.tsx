@@ -11,7 +11,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantStyles = {
-    base: 'flex w-full items-center justify-between rounded-lg border-2 px-5 py-2.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer',
+    base: 'flex w-full items-center justify-between rounded-lg border-2 px-5 py-2.5 font-semibold transition-colors focus:outline-none hover:scale-[0.85] transition-transform duration-200 cursor-pointer',
 
     primary: 'border-transparent bg-orange-base text-white hover:bg-orange-dark  ',
     secondary: 'border-transparent bg-orange-dark text-white hover:bg-orange-dark',
