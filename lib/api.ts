@@ -1,17 +1,9 @@
-const baseUrl = "https://zeinebackend.onrender.com"
+const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://zeinebackend.onrender.com';
 
-/**
- * Um wrapper para a API fetch nativa que configura automaticamente
- * a URL base, o envio de cookies (credentials: 'include'),
- * e o tratamento padronizado de erros e respostas.
- * @param path O caminho do endpoint (ex: '/auth/login')
- * @param options As opções do fetch (method, body, headers, etc.)
- * @returns A resposta da API em formato JSON
- */
+
 export async function api(path: string, options?: RequestInit) {
     const url = `${baseUrl}${path}`;
 
-    // Se o body for FormData, não define Content-Type
     const isFormData = options?.body instanceof FormData;
 
     const defaultOptions: RequestInit = {

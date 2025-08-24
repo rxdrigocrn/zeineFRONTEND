@@ -1,15 +1,15 @@
 'use client';
 
+import { api } from '@/lib/api';
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Mail, Lock } from 'lucide-react';
-import { api } from '@/lib/api';
 import { TextInput } from '@/components/ui/FormInput';
 import { Button } from '../ui/ButtonInput';
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify'; 
+import { toast } from 'react-toastify';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Por favor, insira um e-mail válido.' }),
@@ -41,10 +41,10 @@ const LoginForm = () => {
 
       toast.success('Login realizado com sucesso!');
       router.push('/dashboard');
-    } catch (err) {  
+    } catch (err) {
       let errorMessage = 'E-mail ou senha inválidos.';
 
-       if (err instanceof Error) {
+      if (err instanceof Error) {
         errorMessage = err.message;
       }
 
