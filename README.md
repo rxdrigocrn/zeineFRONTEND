@@ -19,7 +19,7 @@ Desafio Market Place Zeine.
 ### 1️⃣ Clone o projeto e instale as dependências
 
 ```bash
-git clone https://github.com/_SEU_USUARIO_/_SEU_REPO_.git
+git clone https://github.com/rxdrigocrn/zeineFRONTEND.git
 cd SEU_REPO
 npm install
 ```
