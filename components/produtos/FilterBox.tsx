@@ -74,9 +74,9 @@ const FilterBox = () => {
                         leftIcon={<Tag />}
                         label='Status'
                         items={[
-                            { label: 'Anunciado', value: 'ANUNCIADO' },
-                            { label: 'Vendido', value: 'VENDIDO' },
-                            { label: 'Cancelado', value: 'CANCELADO' },
+                            { label: 'Anunciado', value: 'Anunciado' },
+                            { label: 'Vendido', value: 'Vendido' },
+                            { label: 'Cancelado', value: 'Cancelado' },
                         ]}
                         value={watch('status')} // Mantém o item selecionado
                         onSelect={(item) => setValue('status', item?.value)}

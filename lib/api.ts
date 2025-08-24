@@ -1,6 +1,5 @@
 const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://zeinebackend.onrender.com';
 
-
 export async function api(path: string, options?: RequestInit) {
     const url = `${baseUrl}${path}`;
 
