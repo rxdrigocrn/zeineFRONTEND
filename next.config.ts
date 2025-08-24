@@ -1,3 +1,25 @@
+// import type { NextConfig } from "next";
+
+// const nextConfig: NextConfig = {
+//   reactStrictMode: true,
+//   env: {
+//     JWT_SECRET_KEY: process.env.JWT_SECRET,
+//   },
+//   images: {
+//     remotePatterns: [
+//       {
+//         protocol: 'http',
+//         hostname: 'localhost',
+//         port: '5000',
+//         pathname: '/uploads/**',
+//       },
+//     ],
+//   },
+// };
+
+// export default nextConfig;
+
+
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -8,9 +30,8 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '5000',
+        protocol: 'https',
+        hostname: 'zeinebackend.onrender.com',
         pathname: '/uploads/**',
       },
     ],
@@ -18,4 +39,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-
