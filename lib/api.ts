@@ -1,40 +1,37 @@
+// lib/api.ts
+import axios, { AxiosRequestConfig } from 'axios';
+
 const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://zeinebackend.onrender.com';
 
+export async function api(path: string, options?: AxiosRequestConfig) {
+    try {
+        const url = `${baseUrl}${path}`;
 
-export async function api(path: string, options?: RequestInit) {
-    const url = `${baseUrl}${path}`;
+        const isFormData = options?.data instanceof FormData;
 
-    const isFormData = options?.body instanceof FormData;
+        const defaultOptions: AxiosRequestConfig = {
+            url,
+            method: options?.method || 'GET',
+            headers: {
+                ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
+                ...options?.headers,
+            },
+            data: options?.data,
+            withCredentials: true,
+            maxRedirects: 0,
+        };
 
-    const defaultOptions: RequestInit = {
-        credentials: 'include',
-        headers: {
-            ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
-        },
-    };
+        const response = await axios(defaultOptions);
 
-    const mergedOptions = {
-        ...defaultOptions,
-        ...options,
-        headers: {
-            ...defaultOptions.headers,
-            ...options?.headers,
-        },
-    };
-
-    const response = await fetch(url, mergedOptions);
-
-    if (!response.ok) {
-        const errorData = await response.json().catch(() => ({
-            message: 'Erro desconhecido na resposta da API.',
-        }));
-        throw new Error(errorData.message || 'Ocorreu um erro na requisição.');
+        return response.data;
+    } catch (err: any) {
+        // Axios encapsula erros
+        if (err.response?.data?.message) {
+            throw new Error(err.response.data.message);
+        }
+        if (err.response) {
+            throw new Error(`Erro ${err.response.status}: ${JSON.stringify(err.response.data)}`);
+        }
+        throw new Error(err.message || 'Erro desconhecido na requisição.');
     }
-
-    const contentType = response.headers.get('content-type');
-    if (contentType && contentType.includes('application/json')) {
-        return response.json();
-    }
-
-    return {};
 }
