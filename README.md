@@ -14,6 +14,11 @@ Desafio Market Place Zeine.
 
 ---
 
+## Deploy
+
+- [Front](https://zeine-frontend.vercel.app)
+- [Back](https://zeinebackend.onrender.com)
+
 ## 🚩 Começando
 
 ### 1️⃣ Clone o projeto e instale as dependências
@@ -71,6 +76,18 @@ A página se atualiza automaticamente conforme você edita os arquivos.
 - **Fonts:** DM Sans para títulos e Poppins para textos podem ser configuradas em `globals.css` ou via `next/font/google`.
 
 ---
+
+## 👾 Decisões Técnicas
+
+Decisões Técnicas do Front-end
+
+- Next.js com App Router: Escolhido pelo suporte a renderização híbrida (SSR/SSG), modularidade de rotas e facilidade de aplicar layouts e middlewares.
+
+- Zustand para estado global: Biblioteca leve e eficiente, ideal para gerenciar estados compartilhados como autenticação, filtros e dados de usuário, com tipagem TypeScript completa.
+
+- Middleware do Next.js: Utilizado para checagem de autenticação e controle de acesso às rotas privadas, mantendo lógica centralizada e previsível.
+
+- Controle do token no front-end: O token de autenticação é gerenciado no cliente, permitindo persistência de sessão e funcionamento consistente em produção. Caso seja necessário, poderia ser utilizado cookie HTTP-only para maior segurança, pois não é acessível via JavaScript.
 
 
 
