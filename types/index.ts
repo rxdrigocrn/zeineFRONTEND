@@ -45,3 +45,10 @@ export interface Product {
     userId: string;
     slug: string;
 }
+
+export type DashboardResponse = {
+    productsAnnounced: number;
+    productsCanceled: number;
+    productsSold: number;
+    visitors: number[];
+}

@@ -1,10 +1,11 @@
 'use client';
 import Dashboard from '@/components/layout/Dashboard';
 import { api } from '@/lib/api';
+import { DashboardResponse } from '@/types';
 import { useEffect, useState } from 'react';
 
 const DashboardPage = () => {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<DashboardResponse | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
