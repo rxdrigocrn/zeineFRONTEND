@@ -8,8 +8,7 @@ const SECRET_KEY = process.env.JWT_SECRET_KEY;
 export async function middleware(request: NextRequest) {
     const token = request.cookies.get('access_token')?.value;
     const path = request.nextUrl.pathname;
-    console.log('Cookies recebidos:', token);
-
+ 
     if (
         path.startsWith('/cover.jpg') ||
         path.startsWith('/Logo.svg') ||

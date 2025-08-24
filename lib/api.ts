@@ -1,13 +1,16 @@
+import Cookies from 'js-cookie';
 const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://zeinebackend.onrender.com';
 
 export async function api(path: string, options?: RequestInit) {
     const url = `${baseUrl}${path}`;
     const isFormData = options?.body instanceof FormData;
 
+    const token = Cookies.get('access_token');
+
     const defaultOptions: RequestInit = {
-        credentials: 'include',
         headers: {
             ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
     };
 
@@ -26,9 +29,7 @@ export async function api(path: string, options?: RequestInit) {
     const isJson = contentType && contentType.includes('application/json');
     const data = isJson ? await response.json() : null;
 
-    if (response.status === 201) {
-        return data ?? {};
-    }
+    if (response.status === 201) return data ?? {};
 
     if (!response.ok) {
         const errorMessage = data?.message || response.statusText || 'Erro inesperado';
@@ -37,3 +38,4 @@ export async function api(path: string, options?: RequestInit) {
 
     return data ?? {};
 }
+
