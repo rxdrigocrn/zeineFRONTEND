@@ -72,6 +72,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSave }) => {
     if (savedProduct && onSave) onSave(savedProduct);
   };
 
+
   return (
     <FormProvider {...methods}>
       <div className="w-full flex flex-col lg:flex-row lg:items-start gap-2 lg:gap-1">

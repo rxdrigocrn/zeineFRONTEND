@@ -32,6 +32,7 @@ const LoginForm = () => {
   const emailValue = watch('email');
   const passwordValue = watch('password');
 
+  
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
     try {
       await api('/auth/login', {
@@ -42,15 +43,11 @@ const LoginForm = () => {
       toast.success('Login realizado com sucesso!');
       router.push('/dashboard');
     } catch (err) {
-      let errorMessage = 'E-mail ou senha inválidos.';
-
-      if (err instanceof Error) {
-        errorMessage = err.message;
-      }
-
+      const errorMessage = err instanceof Error ? err.message : 'Erro inesperado';
       toast.error(errorMessage);
     }
   };
+
 
   return (
     <div className="w-full md:w-2/5 flex items-center justify-center p-4 min-h-screen">

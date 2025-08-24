@@ -1,7 +1,7 @@
 // app/(private)/produto/page.tsx
 import React from 'react';
 import Layout from '@/components/layout/LayoutBase';
-import ProductsList from '@/components/produtos/ProductsList';
+import ProductsList from '@/components/produtos/ProductList';
 import { api } from '@/lib/api';
 
 const ProductsPage = async () => {

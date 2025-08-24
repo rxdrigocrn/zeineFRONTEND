@@ -1,7 +1,7 @@
 'use client';
 
 import Layout from '@/components/layout/LayoutBase';
-import ProductForm from '@/components/produtos/FormProduto';
+import ProductForm from '@/components/produtos/ProductForm';
 import { ArrowLeft, Ban, Check } from 'lucide-react';
 import { useRouter, useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';

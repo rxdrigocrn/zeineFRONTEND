@@ -1,6 +1,6 @@
 'use client';
 import Layout from '@/components/layout/LayoutBase';
-import ProductForm from '@/components/produtos/FormProduto';
+import ProductForm from '@/components/produtos/ProductForm';
 import { useRouter } from 'next/navigation';
 
 const CriarForm = () => {

@@ -119,7 +119,6 @@ const SelectInput: React.FC<SelectInputProps> = ({ label, items, onSelect, leftI
           <motion.ul
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
             transition={{ type: 'spring', stiffness: 500, damping: 30 }}
             className="absolute top-full left-0 right-0 mt-1 bg-white rounded-md shadow-lg max-h-60 overflow-auto z-20 origin-top"
           >

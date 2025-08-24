@@ -32,6 +32,7 @@ const ProfileFileInput: React.FC<ProfileFileInputProps> = ({
 }) => {
     const { setUser } = useUserStore();
     const [preview, setPreview] = useState<string | null>(initialImage || null);
+    const [hover, setHover] = useState(false);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -46,17 +47,14 @@ const ProfileFileInput: React.FC<ProfileFileInputProps> = ({
             return;
         }
 
-        // Preview temporário
         const tempPreview = URL.createObjectURL(file);
         setPreview(tempPreview);
 
         if (isRegister) {
-            // Apenas envia o arquivo para o form do registro
             if (onFileSelect) onFileSelect(file);
             return;
         }
 
-        // Caso seja atualização de perfil do usuário
         try {
             setLoading(true);
             const formData = new FormData();
@@ -68,10 +66,7 @@ const ProfileFileInput: React.FC<ProfileFileInputProps> = ({
             });
 
             setUser(res);
-
-            const profileUrl = res.profileImage
-                ? `${res.profileImage.replace(/\\/g, '/')}`
-                : null;
+            const profileUrl = res.profileImage ? `${res.profileImage.replace(/\\/g, '/')}` : null;
             setPreview(profileUrl);
 
         } catch (err) {
@@ -85,7 +80,11 @@ const ProfileFileInput: React.FC<ProfileFileInputProps> = ({
 
     return (
         <div className="flex flex-col items-center justify-center relative">
-            <label className="cursor-pointer relative">
+            <label
+                className="cursor-pointer relative"
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
+            >
                 <Avatar className={`${sizeInput} relative overflow-hidden`}>
                     {preview ? (
                         <Image
@@ -96,9 +95,16 @@ const ProfileFileInput: React.FC<ProfileFileInputProps> = ({
                         />
                     ) : (
                         <AvatarFallback>
-                            <ImageIcon size={iconSize} />
+                            <ImageIcon className={`${hover ? 'text-white' : ''}`} size={iconSize} />
                         </AvatarFallback>
                     )}
+
+                    {/* Hover Overlay */}
+                    {hover && !loading && (
+                        <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white text-xs rounded-xl">
+                        </div>
+                    )}
+
                     <input
                         type="file"
                         accept="image/*"
@@ -106,13 +112,14 @@ const ProfileFileInput: React.FC<ProfileFileInputProps> = ({
                         onChange={handleChange}
                         {...props}
                     />
-                </Avatar>
 
-                {loading && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-full">
-                        <div className="loader-border w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    </div>
-                )}
+                    {/* Loader */}
+                    {loading && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-full">
+                            <div className="loader-border w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        </div>
+                    )}
+                </Avatar>
             </label>
 
             {error && <span className="text-red-600 text-xs mt-1">{error}</span>}

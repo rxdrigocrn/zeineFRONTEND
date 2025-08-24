@@ -78,7 +78,7 @@ const FilterBox = () => {
                             { label: 'Vendido', value: 'Vendido' },
                             { label: 'Cancelado', value: 'Cancelado' },
                         ]}
-                        value={watch('status')} // Mantém o item selecionado
+                        value={watch('status')} 
                         onSelect={(item) => setValue('status', item?.value)}
                     />
                 </div>
