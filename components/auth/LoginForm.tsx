@@ -9,7 +9,7 @@ import { api } from '@/lib/api';
 import { TextInput } from '@/components/ui/FormInput';
 import { Button } from '../ui/ButtonInput';
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify'; // <-- React Toastify
+import { toast } from 'react-toastify'; 
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Por favor, insira um e-mail válido.' }),
