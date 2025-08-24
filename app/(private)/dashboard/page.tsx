@@ -1,20 +1,24 @@
- import { cookies } from 'next/headers';
+'use client';
 import Dashboard from '@/components/layout/Dashboard';
+import { api } from '@/lib/api';
+import { useEffect, useState } from 'react';
 
-const DashboardPage = async () => {
-  // Pega os cookies da requisição
-  const cookieStore = cookies();
-  const accessToken = (await cookieStore).get('access_token')?.value;
+const DashboardPage = () => {
+  const [data, setData] = useState<any>(null);
 
-  // Faz fetch para o backend passando o cookie
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dashboard/stats`, {
-    headers: {
-      'Cookie': `access_token=${accessToken}`,
-    },
-    credentials: 'include',
-  });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await api('/dashboard/stats', { method: 'GET' });
+        setData(res);
+      } catch (err: any) {
+        console.error(err.message);
+      }
+    };
+    fetchData();
+  }, []);
 
-  const data = await res.json();
+  if (!data) return <div>Loading...</div>;
 
   const productsSold = data?.productsSold ?? 0;
   const productsAnnounced = data?.productsAnnounced ?? 0;
