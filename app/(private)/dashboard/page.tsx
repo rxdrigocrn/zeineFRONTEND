@@ -2,7 +2,7 @@ import Dashboard from '@/components/layout/Dashboard';
 import { api } from '@/lib/api';
 
 const DashboardPage = async () => {
-    const data = await api('/dashboard/stats', { cache: 'no-store' });
+    const data = await api('/dashboard/stats');
 
     const productsSold = data.productsSold;
     const productsAnnounced = data.productsAnnounced;

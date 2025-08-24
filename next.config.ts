@@ -31,7 +31,14 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'zeinebackend.onrender.com',
+        hostname: 'zeine.onrender.com',
+        port: '',
+        pathname: '/uploads/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '5000',
         pathname: '/uploads/**',
       },
     ],

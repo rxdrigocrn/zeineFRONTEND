@@ -19,7 +19,6 @@ const ProductFileInput: React.FC<ProductFileInputProps> = ({
     const [preview, setPreview] = useState<string | null>(previewUrl || null);
     const [hover, setHover] = useState(false);
 
-    // Atualiza preview quando o prop previewUrl mudar
     useEffect(() => {
         setPreview(previewUrl || null);
     }, [previewUrl]);

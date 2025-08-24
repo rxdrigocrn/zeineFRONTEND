@@ -8,11 +8,11 @@ import { TextInput } from '@/components/ui/FormInput';
 import { PriceInput } from '@/components/ui/PriceInput';
 import { TextAreaInput } from '@/components/ui/TextAreaInput';
 import { Button } from '@/components/ui/ButtonInput';
-import ProductFileInput from '@/components/ui/ProfileFileInput';
 import SelectInput from '../ui/SelectInput';
 import { Product } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useProductStore } from '@/store/produtoStore';
+import ProductFileInput from '../ui/ProductImage';
 import { api } from '@/lib/api';
 
 const productSchema = z.object({
@@ -79,7 +79,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSave }) => {
       <div className="w-full flex flex-col lg:flex-row lg:items-start gap-2 lg:gap-1">
         <div className="w-full lg:w-2/5">
           <ProductFileInput
-            label="Imagem"
             name="image"
             error={errors.image?.message}
             previewUrl={preview ?? undefined}
