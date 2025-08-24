@@ -15,7 +15,7 @@ import { LogOut } from 'lucide-react';
 import { useUserStore } from '@/store/userStore';
 import ProfileFileInput from './ProfileFileInput';
 import { useRouter } from 'next/navigation';
-import { api } from '@/lib/api';
+import Cookies from 'js-cookie';
 
 const ProfileDropdown = () => {
     const { user } = useUserStore();
@@ -30,8 +30,10 @@ const ProfileDropdown = () => {
             .toUpperCase();
     };
 
-    const handleLogout = async () => {
-        await api('/auth/logout', { method: 'POST' });
+
+    const handleLogout = () => {
+        Cookies.remove('access_token', { path: '/' });
+
         router.push('/login');
     };
 

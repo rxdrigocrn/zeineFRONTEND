@@ -10,7 +10,6 @@ import { TextInput } from '@/components/ui/FormInput';
 import { Button } from '../ui/ButtonInput';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import Cookies from 'js-cookie';
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'Por favor, insira um e-mail válido.' }),
@@ -33,21 +32,14 @@ const LoginForm = () => {
   const emailValue = watch('email');
   const passwordValue = watch('password');
 
+  
   const onSubmit: SubmitHandler<LoginFormInputs> = async (data) => {
     try {
-      const response = await api('/auth/login', {
+      await api('/auth/login', {
         method: 'POST',
         body: JSON.stringify(data),
       });
 
-      const token = response.token;
-
-       Cookies.set('access_token', token, {
-        expires: 1,  
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
-        path: '/',
-      });
       toast.success('Login realizado com sucesso!');
       router.push('/dashboard');
     } catch (err) {
