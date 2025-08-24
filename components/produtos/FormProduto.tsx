@@ -42,7 +42,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSave }) => {
 
   const { handleSubmit, setValue, watch, formState: { errors, isSubmitting } } = methods;
 
-  // Carrega categorias
   useEffect(() => {
     const fetchCategories = async () => {
       const data = await api('/categories');
@@ -51,7 +50,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSave }) => {
     fetchCategories();
   }, []);
 
-  // Popula form quando for edição
   useEffect(() => {
     if (!product) return;
     setValue('title', product.title);
