@@ -19,6 +19,10 @@ Desafio Market Place Zeine.
 - [Front](https://zeine-frontend.vercel.app)
 - [Back](https://zeinebackend.onrender.com)
 
+- OBS:
+Este projeto está hospedado em uma instância gratuita do Render. Como explicado pelo próprio Render, servidores gratuitos podem entrar em modo de hibernação após períodos de inatividade.
+Isso significa que, se ninguém acessar a aplicação por algum tempo, a primeira requisição após a hibernação pode demorar 50 segundos ou mais para responder, enquanto o servidor “acorda” novamente.
+Portanto, atrasos na primeira requisição são normais e fazem parte do funcionamento da instância gratuita.
 ## 🚩 Começando
 
 ### 1️⃣ Clone o projeto e instale as dependências
