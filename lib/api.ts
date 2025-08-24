@@ -1,4 +1,7 @@
-const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://zeinebackend.onrender.com';
+const baseUrl =
+    typeof window === 'undefined'
+        ? process.env.API_URL
+        : process.env.NEXT_PUBLIC_API_URL;
 
 /**
  * Um wrapper para a API fetch nativa que configura automaticamente
