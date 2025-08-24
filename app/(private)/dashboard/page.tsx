@@ -12,8 +12,10 @@ const DashboardPage = () => {
       try {
         const res = await api('/dashboard/stats', { method: 'GET' });
         setData(res);
-      } catch (err: any) {
-        console.error(err.message);
+      } catch (err) {
+        if (err instanceof Error) {
+          console.error(err.message);
+        }
       }
     };
     fetchData();
