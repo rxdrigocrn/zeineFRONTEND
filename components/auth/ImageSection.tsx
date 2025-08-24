@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const ImageSection = () => {
     const [coverSrc, setCoverSrc] = useState('/cover.jpg');
-    const logo = '/logo.svg';
+    const logo = '/Logo.svg';
 
     return (
         <div className="w-full md:w-3/5 h-64 md:h-screen relative hidden md:block">
