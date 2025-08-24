@@ -1,0 +1,80 @@
+'use client';
+
+import Layout from '@/components/layout/LayoutBase';
+import ProductForm from '@/components/produtos/FormProduto';
+import { ArrowLeft, Ban, Check } from 'lucide-react';
+import { useRouter, useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { Product } from '@/types';
+import { useProductStore } from '@/store/produtoStore';
+import { api } from '@/lib/api';
+
+const EditarForm = () => {
+  const router = useRouter();
+  const { slug } = useParams();
+  const { sell, cancel, loading } = useProductStore();
+  const [product, setProduct] = useState<Product | null>(null);
+
+  useEffect(() => {
+    if (!slug) return;
+    const fetchProduct = async () => {
+      const data = await api(`/products/slug/${slug}`);
+      setProduct(data);
+    };
+    fetchProduct();
+  }, [slug]);
+
+  if (!product) return (
+    <Layout>
+      <div className="flex items-center justify-center h-screen">
+        <span className="text-gray-500">Carregando...</span>
+      </div>
+    </Layout>
+  );
+
+  return (
+    <Layout>
+      <div className="mb-8">
+        <button type="button" onClick={() => router.back()} className="flex items-center gap-2 text-orange-base mb-2 hover:underline">
+          <ArrowLeft size={18} /> Voltar
+        </button>
+
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold">Editar produto</h1>
+            <p className="text-gray-500 text-sm md:text-base">Gerencie as informações do produto cadastrado</p>
+          </div>
+
+          <div className="flex gap-8 mt-auto">
+            {!product?.status?.includes('Vendido') && (
+              <button
+                type="button"
+                disabled={loading || !product?.id}
+                className="text-orange-base hover:underline cursor-pointer flex items-center gap-1"
+                onClick={() => sell(product.id, router)}
+              >
+                <Check size={18} /> Marcar como vendido
+              </button>
+            )}
+            {!product?.status?.includes('Cancelado') && (
+              <button
+                type="button"
+                disabled={loading || !product?.id}
+                className="text-orange-base hover:underline cursor-pointer flex items-center gap-1"
+                onClick={() => cancel(product.id, router)}
+              >
+                <Ban size={18} /> Desativar anúncio
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col lg:flex-row w-full gap-6">
+        <ProductForm product={product} />
+      </div>
+    </Layout>
+  );
+};
+
+export default EditarForm;

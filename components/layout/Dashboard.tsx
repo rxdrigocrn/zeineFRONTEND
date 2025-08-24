@@ -17,7 +17,7 @@ const Dashboard = ({ productsSold, productsAnnounced, visitorsData }: DashboardP
         <p className="text-gray-500">Confira as estatísticas da sua loja no último mês</p>
       </div>
 
-      <div className="flex flex-col lg:flex-row w-full">
+      <div className="flex flex-col justify-center items-center lg:flex-row w-full">
         <div className="flex flex-col gap-[15px] lg:w-[300px]">
           <KpiCard
             title="Produtos Vendidos"
@@ -31,12 +31,12 @@ const Dashboard = ({ productsSold, productsAnnounced, visitorsData }: DashboardP
           />
           <KpiCard
             title="Pessoas Visitantes"
-            value={visitorsData.reduce((acc, curr) => acc + curr.visitors, 0)} 
+            value={visitorsData.reduce((acc, curr) => acc + curr.visitors, 0)}
             icon={<Users className="text-gray-400" size={32} />}
           />
         </div>
 
-        <div className="flex-1 flex items-center lg:ml-[24px] mt-6 lg:mt-0">
+        <div className="flex-1 flex items-center mt-6 lg:mt-0">
           <VisitorsLineChart data={visitorsData} />
         </div>
       </div>

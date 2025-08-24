@@ -16,8 +16,8 @@ export default function NotFound() {
                 Ops! Página não encontrada.
             </p>
             <button
-                onClick={() => router.push('/')}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-orange-base hover:bg-orange-dark text-white rounded-lg shadow-lg transition-colors"
+                onClick={() => router.push('/dashboard')}
+                className="inline-flex items-center gap-2 px-6 cursor-pointer py-3 bg-orange-base hover:bg-orange-dark text-white rounded-lg shadow-lg transition-colors"
             >
                 <ArrowLeft className="w-5 h-5" />
                 Voltar para Home

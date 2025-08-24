@@ -19,9 +19,16 @@ export enum ProductCategory {
 }
 
 export enum ProductStatus {
-    ANUNCIADO = 'ANUNCIADO',
-    VENDIDO = 'VENDIDO',
-    CANCELADO = 'CANCELADO',
+    ANUNCIADO = 'Anunciado',
+    VENDIDO = 'Vendido',
+    CANCELADO = 'Desativado',
+}
+
+export type Category = {
+    id: string;
+    name: ProductCategory;
+    slug: string;
+    icon: string;
 }
 
 export interface Product {
@@ -30,9 +37,11 @@ export interface Product {
     description: string;
     price: number;
     image: string | null;
-    category: ProductCategory;
+    category: Category;
+    categoryId: string;
     status: ProductStatus;
     createdAt: string;
     updatedAt: string;
     userId: string;
+    slug: string;
 }

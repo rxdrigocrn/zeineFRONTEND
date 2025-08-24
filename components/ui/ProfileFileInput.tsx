@@ -1,58 +1,114 @@
 'use client';
 
-import React, { useState, InputHTMLAttributes } from 'react';
+import React, { useState, InputHTMLAttributes, useEffect } from 'react';
+import Image from 'next/image';
 import { Image as ImageIcon } from 'lucide-react';
-import clsx from 'clsx';
+import { Avatar, AvatarFallback } from './avatar';
+import { useUserStore } from '@/store/userStore';
+import { api } from '@/lib/api';
+import { toast } from 'react-toastify';
 
-interface FileInputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface ProfileFileInputProps extends InputHTMLAttributes<HTMLInputElement> {
     label?: string;
     error?: string;
+    initialImage?: string;
+    isRegister?: boolean;
     onFileSelect?: (file: File | null) => void;
+    sizeInput?: string;
+    iconSize?: number;
 }
 
-const FileInput: React.FC<FileInputProps> = ({
+const ProfileFileInput: React.FC<ProfileFileInputProps> = ({
     label,
     error,
+    initialImage,
+    isRegister = false,
     onFileSelect,
+    sizeInput = 'w-12 h-12',
+    iconSize = 16,
     ...props
 }) => {
-    const [preview, setPreview] = useState<string | null>(null);
+    const { setUser } = useUserStore();
+    const [preview, setPreview] = useState<string | null>(initialImage || null);
+    const [loading, setLoading] = useState(false);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    useEffect(() => {
+        setPreview(initialImage || null);
+    }, [initialImage]);
+
+    const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null;
-        if (file) {
-            setPreview(URL.createObjectURL(file));
-            onFileSelect?.(file);
-        } else {
-            setPreview(null);
-            onFileSelect?.(null);
+        if (!file) {
+            setPreview(initialImage || null);
+            if (onFileSelect) onFileSelect(null);
+            return;
+        }
+
+        // Preview temporário
+        const tempPreview = URL.createObjectURL(file);
+        setPreview(tempPreview);
+
+        if (isRegister) {
+            // Apenas envia o arquivo para o form do registro
+            if (onFileSelect) onFileSelect(file);
+            return;
+        }
+
+        // Caso seja atualização de perfil do usuário
+        try {
+            setLoading(true);
+            const formData = new FormData();
+            formData.append('profileImage', file);
+
+            const res = await api(`/users/profile`, {
+                method: 'PATCH',
+                body: formData,
+            });
+
+            setUser(res);
+
+            const profileUrl = res.profileImage
+                ? `${res.profileImage.replace(/\\/g, '/')}`
+                : null;
+            setPreview(profileUrl);
+
+        } catch (err: any) {
+            toast.error(err?.message || 'Erro ao atualizar imagem');
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div className="flex flex-col items-center justify-center">
-            <label
-                className={clsx(
-                    'w-[120px] h-[120px] flex items-center justify-center cursor-pointer transition overflow-hidden',
-                    'bg-shape-dark rounded-xl'
-                )}
-            >
-                {preview ? (
-                    <img
-                        src={preview}
-                        alt="Preview"
-                        className="w-full h-full object-cover rounded-xl"
+        <div className="flex flex-col items-center justify-center relative">
+            <label className="cursor-pointer relative">
+                <Avatar className={`${sizeInput} relative overflow-hidden`}>
+                    {preview ? (
+                        <Image
+                            src={preview}
+                            alt="Preview"
+                            fill
+                            className="object-cover"
+                        />
+                    ) : (
+                        <AvatarFallback>
+                            <ImageIcon size={iconSize} />
+                        </AvatarFallback>
+                    )}
+                    <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleChange}
+                        {...props}
                     />
-                ) : (
-                    <ImageIcon className="text-orange-base" size={32} />
+                </Avatar>
+
+                {loading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-full">
+                        <div className="loader-border w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    </div>
                 )}
-                <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleChange}
-                    {...props}
-                />
             </label>
 
             {error && <span className="text-red-600 text-xs mt-1">{error}</span>}
@@ -60,4 +116,4 @@ const FileInput: React.FC<FileInputProps> = ({
     );
 };
 
-export default FileInput;
+export default ProfileFileInput;

@@ -11,6 +11,8 @@ import { api } from '@/lib/api';
 import { TextInput } from '@/components/ui/FormInput';
 import { Button } from '../ui/ButtonInput';
 
+import { toast } from 'react-toastify';
+
 import FileInput from '../ui/ProfileFileInput';
 
 const registerSchema = z.object({
@@ -49,6 +51,7 @@ const RegisterForm = () => {
     const passwordValue = watch('password');
     const confirmPasswordValue = watch('confirmPassword');
 
+
     const onSubmit: SubmitHandler<RegisterFormInputs> = async (data) => {
         try {
             const formData = new FormData();
@@ -65,12 +68,10 @@ const RegisterForm = () => {
                 body: formData,
             });
 
+            toast.success('Cadastro realizado com sucesso! 🚀');
             router.push('/login');
         } catch (err: any) {
-            setError('root.serverError', {
-                type: 'manual',
-                message: err.message || 'Erro ao cadastrar usuário.',
-            });
+            toast.error(err?.message || 'Erro ao cadastrar usuário.');
         }
     };
 
@@ -111,6 +112,9 @@ const RegisterForm = () => {
                                         setValue("img_perfil", undefined, { shouldValidate: true, shouldDirty: true, shouldTouch: true });
                                     }
                                 }}
+                                sizeInput='w-24 h-24'
+                                iconSize={24}
+                                isRegister
                             />
 
 

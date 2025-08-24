@@ -2,14 +2,30 @@ import React from 'react'
 
 interface BadgeProps {
     name: string
-    color: string
 }
 
-const StatusBadge = ({ name, color }: BadgeProps) => (
-    <div className={`rounded-full px-8 py-4 text-white ${color}`}>
-        {name}
-    </div>
-)
+const StatusBadge = ({ name }: BadgeProps) => {
+    let color = ''
+    switch (name) {
+        case 'Anunciado':
+            color = 'bg-blue-dark'
+            break
+        case 'Vendido':
+            color = 'bg-success'
+            break
+        case 'Cancelado':
+            color = 'bg-gray-300'
+            break
+        default:
+            color = 'bg-gray-400'
+    }
+
+    return (
+        <div className={`text-xs rounded-full px-2 py-1 text-white ${color}`}>
+            {name}
+        </div>
+    )
+}
 
 export default StatusBadge
 

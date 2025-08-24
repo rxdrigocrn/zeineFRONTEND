@@ -1,19 +1,23 @@
+import React from 'react';
 import Layout from '@/components/layout/LayoutBase';
+import ProductsList from '@/components/produtos/ProductsList';
+import { api } from '@/lib/api';
 
 
-const ProdutoPage = () => {
+const ProductsPage = async () => {
+    const response = await api('/products?page=1&limit=20', { method: 'GET' });
+    const products = response.data ?? [];
+
     return (
         <Layout>
             <div className="mb-8">
                 <h1 className="text-2xl md:text-3xl font-bold">Seus Produtos</h1>
-                <p className="text-gray-500">Acesse e gerencia a sua lista de produtos à venda</p>
+                <p className="text-gray-500">Acesse e gerencie a sua lista de produtos à venda</p>
             </div>
 
-            <div className="flex flex-col lg:flex-row w-full gap-6">
-
-            </div>
+            <ProductsList initialProducts={products} />
         </Layout>
     );
 };
 
-export default ProdutoPage;
+export default ProductsPage;

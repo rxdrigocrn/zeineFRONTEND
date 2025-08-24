@@ -5,14 +5,12 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Mail, Lock } from 'lucide-react';
-
 import { api } from '@/lib/api';
 import { TextInput } from '@/components/ui/FormInput';
 import { Button } from '../ui/ButtonInput';
-
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify'; // <-- React Toastify
 
-// Schema de validação com Zod
 const loginSchema = z.object({
   email: z.string().email({ message: 'Por favor, insira um e-mail válido.' }),
   password: z.string().min(1, { message: 'A senha é obrigatória.' }),
@@ -25,14 +23,12 @@ const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    setError,
     watch,
   } = useForm<LoginFormInputs>({
     resolver: zodResolver(loginSchema),
   });
 
   const router = useRouter();
-
   const emailValue = watch('email');
   const passwordValue = watch('password');
 
@@ -43,12 +39,10 @@ const LoginForm = () => {
         body: JSON.stringify(data),
       });
 
+      toast.success('Login realizado com sucesso!');
       router.push('/dashboard');
     } catch (err: any) {
-      setError('root.serverError', {
-        type: 'manual',
-        message: err.message || 'E-mail ou senha inválidos.',
-      });
+      toast.error(err?.message || 'E-mail ou senha inválidos.');
     }
   };
 
@@ -61,17 +55,10 @@ const LoginForm = () => {
         <div className='flex flex-col mb-8'>
           <div>
             <h2 className="text-2xl font-bold mb-2 text-gray-500">Acesse sua conta</h2>
-            <p className="text-sm text-gray-300 mb-6 ">
+            <p className="text-sm text-gray-300 mb-6">
               Informe seu e-mail e senha para entrar.
             </p>
           </div>
-
-          {errors.root?.serverError && (
-            <div className="mb-4 text-red-500 text-sm font-medium">
-              {errors.root.serverError.message}
-            </div>
-          )}
-
 
           <div className="flex flex-col gap-6 mb-6">
             <TextInput<LoginFormInputs>
@@ -97,7 +84,6 @@ const LoginForm = () => {
             />
           </div>
 
-
           <div className="">
             <Button
               type="submit"
@@ -116,7 +102,6 @@ const LoginForm = () => {
             Ainda não tem uma conta?
           </p>
 
-
           <Button
             type="button"
             variant="outlinePrimary"
@@ -126,9 +111,7 @@ const LoginForm = () => {
           >
             Cadastrar
           </Button>
-
         </div>
-
       </form>
     </div>
   );

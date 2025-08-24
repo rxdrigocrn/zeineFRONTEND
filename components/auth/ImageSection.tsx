@@ -6,7 +6,6 @@ const ImageSection = () => {
                 alt="Logo"
                 className="absolute top-8 left-8 h-auto"
             />
-
             <div className="flex items-center justify-center h-full">
                 <img
                     src="/cover.jpg"
@@ -20,6 +19,7 @@ const ImageSection = () => {
                 />
             </div>
         </div>
+
     );
 };
 
