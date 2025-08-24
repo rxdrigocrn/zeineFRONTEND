@@ -1,13 +1,14 @@
+// middleware.ts
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { jwtVerify } from 'jose';
 
+const SECRET_KEY = process.env.JWT_SECRET_KEY;
+
 export async function middleware(request: NextRequest) {
     const token = request.cookies.get('access_token')?.value;
     const path = request.nextUrl.pathname;
-    const SECRET_KEY = process.env.JWT_SECRET_KEY;
-
-    console.log('JWT token recebido:', token);
+    console.log('Cookies recebidos:', token);
 
     if (
         path.startsWith('/cover.jpg') ||
@@ -20,13 +21,13 @@ export async function middleware(request: NextRequest) {
         return NextResponse.next();
     }
 
-    if (!SECRET_KEY) throw new Error('Chave secreta JWT não configurada!');
-
     if (path.startsWith('/login') || path.startsWith('/register')) {
         if (token) {
             try {
-                await jwtVerify(token, new TextEncoder().encode(SECRET_KEY));
-                return NextResponse.redirect(new URL('/dashboard', request.url), 308);
+                if (!SECRET_KEY) throw new Error('Chave secreta JWT não configurada!');
+                const secret = new TextEncoder().encode(SECRET_KEY);
+                await jwtVerify(token, secret);
+                return NextResponse.redirect(new URL('/dashboard', request.url));
             } catch {
                 return NextResponse.next();
             }
@@ -35,15 +36,17 @@ export async function middleware(request: NextRequest) {
     }
 
     if (!token) {
-        return NextResponse.redirect(new URL('/login', request.url), 308);
+        return NextResponse.redirect(new URL('/login', request.url));
     }
 
     try {
-        await jwtVerify(token, new TextEncoder().encode(SECRET_KEY));
+        if (!SECRET_KEY) throw new Error('Chave secreta JWT não configurada!');
+        const secret = new TextEncoder().encode(SECRET_KEY);
+        await jwtVerify(token, secret);
         return NextResponse.next();
     } catch (error) {
         console.error('Falha na verificação do JWT:', error);
-        const response = NextResponse.redirect(new URL('/login', request.url), 308);
+        const response = NextResponse.redirect(new URL('/login', request.url));
         response.cookies.delete('access_token');
         return response;
     }
