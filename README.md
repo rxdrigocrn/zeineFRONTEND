@@ -74,7 +74,6 @@ A página se atualiza automaticamente conforme você edita os arquivos.
 
 ## ⚠️ Observações
 
-- rode a migrate 'npx prisma migrate dev'
 - O backend deve estar rodando (`localhost:5000` ou remoto) para login, cadastro e uploads funcionarem.
 - Imagens carregadas via API devem estar incluídas em `remotePatterns` do `next.config.js`.
 - Use `.env.example` como referência de variáveis de ambiente.
