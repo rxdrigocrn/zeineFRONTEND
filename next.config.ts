@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   env: {
-    JWT_SECRET_KEY: process.env.JWT_SECRET,
+    JWT_SECRET: process.env.JWT_SECRET,
   },
   images: {
     remotePatterns: [
